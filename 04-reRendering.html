@@ -23,18 +23,20 @@
             ReactDOM.render(element, root)
         }
 
+        setInterval(reactTime, 1000)
+
+        /*
+            Using vanilla JS to update requires updating the entire DOM element,
+            whereas React only updates its contents...
+        */
+
+        /*
         function vanillaTime() {
             const time = new Date().toLocaleTimeString()
             const element = `<div>The time is ${time}</div>`
             root.innerHTML = element
         }
-
-        setInterval(reactTime, 1000)
-        // setInterval(vanillaTime, 1000)
-
-        /*
-            Using vanilla JS to update requires updating the entire DOM element,
-            whereas React only updates its contents...
+        setInterval(vanillaTime, 1000)
         */
 
     </script>

@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Using Event Handlers with React</title>
+</head>
+<body>
+
+    <div id="root"></div>
+
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
+    
+    <script type="text/babel">
+        
+        /*
+            React synthesizes an event system, optimizing things for us using event delegation. There is only one event handler for each type on the document, and it manages calling our various event handlers.
+        */
+        
+        const state = {eventCount: 0, username: ''}
+        
+        function App() {
+            return (
+                <div>
+                    <p>There have been {state.eventCount} events.</p>
+                    <p><button onClick={increment}>Click</button></p>
+                    <p>You typed: {state.username}</p>
+                    <p><input onChange={updateName}/></p>
+                </div>
+            )
+        }
+
+        function increment() {
+            setState({eventCount: state.eventCount + 1})
+        }
+
+        function updateName(event) {
+            setState({username: event.target.value})
+        }
+
+        function setState(newState) {
+            Object.assign(state, newState)
+            renderApp()
+        }
+
+        function renderApp() {
+            ReactDOM.render(<App/>, root)
+        }
+
+        renderApp()
+
+    </script>
+
+</body>
+</html>

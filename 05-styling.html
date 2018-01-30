@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Styling React Components</title>
+</head>
+<body>
+
+    <div id="root"></div>
+
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
+    
+    <style>
+        .sm { width: 20px; height: 20px }
+        .med { width: 50px; height: 50px }
+        .lg { width: 100px; height: 100px }
+    </style>
+    
+    <script type="text/babel">
+        
+        // Rather than use normal style properties, we declare a style object
+        // This lets us use the spread operator to add more style props
+        // We can also do the same with className
+        
+        // Note that default values (empty) are provided if none is given
+        function Box({style, size = 'sm',...args}) {
+            return <div className={size} style={{...style}} {...args} />
+        }
+
+        // If using px, you can simply add the number and JSX will interpret it
+        const element = (
+            <div>
+                <Box size="med" style={{
+                    backgroundColor: 'lightblue',
+                    fontSize: 30,
+                    padding: 50
+                }}>box</Box>
+            </div>
+        )
+
+        ReactDOM.render(element, root)
+
+    </script>
+
+</body>
+</html>
