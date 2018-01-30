@@ -1,0 +1,82 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Hello World</title>
+</head>
+<body>
+
+    <div id="root"></div>
+
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
+    
+    <script type="text/babel">
+
+        /*
+            JSX is syntactic sugar on top of React.createElement.
+            It allows us to nicely integrate HTML & JS.
+        */
+
+        const defaultContent = 'Hello World...'
+        const defaultClass = 'default'
+
+        const defaultProps = {
+            className: defaultClass,
+            children: defaultContent
+        }
+
+        const defaultElement = <div {...defaultProps} />
+        ReactDOM.render(defaultElement, root)
+
+        /*
+            Below we demonstrate dynamic use of JSX.
+            "Dynamic" is an example reusable component that takes in
+            props that can be used, modified, and rendered.
+            'props.children' is passed in-between the Dynamic tags.
+            You can also pass in values via the Dynamic tag properties.
+        */
+
+        const Dynamic = props => {
+            return (<div>
+                {props.children}
+                {console.log(props.anotherProp)}
+            </div>)}
+        const dynamicElement =
+            <Dynamic {...defaultProps}
+                className='overrideDefaultClass'
+                anotherProp='I am another prop'>
+                Hello World!!!
+            </Dynamic>
+        ReactDOM.render(dynamicElement, root)
+        
+
+        /* 1. Vanilla JS
+        const root = document.getElementById('root')
+        const element = document.createElement('div')
+        element.textContent = 'Hello World'
+        element.className = 'container
+        root.appendChild(element)
+        */
+
+        /* 2. React
+        const element = React.createElement('div', {className: 'container'},
+            'Hello World',
+            '...many args',
+            'same as adding an array to children prop'
+        )
+        ReactDOM.render(element, root)
+        */
+
+        /* 3. React with Basic JSX
+        const element = <div className="container">Hello World</div>
+        ReactDOM.render(element, root)
+        */
+
+    </script>
+</body>
+</html>

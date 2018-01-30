@@ -1,0 +1,49 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Hello?</title>
+</head>
+<body>
+
+    <div id="rawMsg"></div>
+    <div id="msg"></div>
+
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
+    
+    <script type="text/babel">
+
+        /*
+            For conditional rendering, React usually requires ternary expressions,
+            especially when wrapping components in nested HTML elements...
+        */
+
+        // Raw React
+        // note curly braces required to interpolate ternary expression
+        function RawMessage({message}) {
+            return (
+                <div>{
+                    message
+                    ? React.createElement('div', null, message)
+                    : React.createElement('div', null, 'No Message')
+                }</div>
+            )
+        }
+        
+        // JSX
+        // but interpolation is not needed if not nesting HTML elements
+        const Message = ({message}) => {
+            return message ? <div>{message}</div> : <div>No Message</div>
+        }
+
+        ReactDOM.render(<RawMessage message={null} />, rawMsg)
+        ReactDOM.render(<Message message={'Hello?'} />, msg)
+
+    </script>
+</body>
+</html>
