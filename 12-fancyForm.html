@@ -1,0 +1,110 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Controlling Form Values</title>
+</head>
+<body>
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+
+        class FancyForm extends React.Component {
+
+            state = {lines: '', commas: '', selects:[]}
+
+            options = [
+                'apple',
+                'grape',
+                'cherry',
+                'orange',
+                'pear',
+                'peach'
+            ]
+
+            changeCommas = event => {
+                const {value} = event.target
+                const list = value
+                    .split(',')
+                    .map(v => v.trim())
+                    .filter(Boolean)
+                this.setState({
+                    commas: value,
+                    lines: list.join('\n'),
+                    selects: list.filter(v => this.options.includes(v))
+                })
+            }
+
+            changeLines = event => {
+                const {value} = event.target
+                const list = value
+                    .split(',')
+                    .map(v => v.trim())
+                    .filter(Boolean)
+                this.setState({
+                    lines: value,
+                    commas: list.join(', '),
+                    selects: list.filter(v => this.options.includes(v))
+                })
+            }
+
+            changeSelects = event => {
+                const list = Array.from(event.target.selectedOptions)
+                    .map(option => option.value)
+                this.setState({
+                    selects: list,
+                    lines: list.join('\n'),
+                    commas: list.join(', ')
+                })
+            }
+
+            render() {
+                const {lines, commas, selects} = this.state
+                return (
+                <form>
+                <div>
+                    <label>Commas:<br/>
+                        <input type="text"
+                            value={commas}
+                            onChange={this.changeCommas}/>
+                    </label>
+                </div>
+                <div>
+                    <label>Lines:<br/>
+                        <textarea
+                            rows={this.options.length}
+                            value={lines}
+                            onChange={this.changeLines}/>
+                    </label>
+                </div>
+                <div>
+                    <label>Select:<br/>
+                        <select multiple
+                            size={this.options.length}
+                            value={selects}
+                            onChange={this.changeSelects}>
+                            {this.options.map(option => (
+                                <option key={option} value={option}>{option}</option>
+                            ))}
+                        </select>
+                    </label>
+                </div>
+                </form>
+                )
+            }
+            
+        }
+
+        ReactDOM.render(<FancyForm/>, root)
+
+    </script>
+
+<script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+<script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
+</body>
+</html>

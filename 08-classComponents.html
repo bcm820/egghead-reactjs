@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Using Component State</title>
+</head>
+<body>
+
+    <div id="root"></div>
+
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
+    
+    <script type="text/babel">
+
+        /*
+            When using class components, how do we deal with issues around 'this'?
+            Static methods don't have access to 'this' when referring to an object.
+            In a class component, only the return value of the render method has it,
+            since it is returning the actual object.
+
+            To refer to 'this' from a static method, we have to use Public Class Fields
+            syntax, declaring variables outside of the constructor and using arrow
+            functions for our methods to retain our lexical 'this'.
+        */
+
+        class Counter extends React.Component {
+            
+            state = {count: 0}
+
+            increment = () => {
+                this.setState(({count}) => ({
+                    count: count + 1
+                }))
+            }
+
+            render() {
+                const styles = {
+                    height: '50vh',
+                    width: '50vh',
+                    fontSize: 100
+                }
+                return (
+                    <button onClick={this.increment} style={styles}>
+                        {this.state.count}
+                    </button>
+                )
+            }
+
+        }
+
+        ReactDOM.render(<Counter/>, root)
+
+    </script>
+
+</body>
+</html>

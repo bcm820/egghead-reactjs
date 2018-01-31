@@ -17,8 +17,14 @@
     
     <script type="text/babel">
 
-        class StopWatch extends React.Component {
+        /*
+            React components can be declared as classes that extend the React.Component class.
+            Classes have a state property that can hold many different values, which can be updated.
+            Extending React.Component requires a render method
+        */
 
+        class StopWatch extends React.Component {
+            
             state = {time: 0, running: false}
 
             run = () => {
@@ -56,7 +62,7 @@
                 }
                 const labelStyles = {
                     fontFamily: 'Helvetica Neue',
-                    fontSize: '5em',
+                    fontSize: '4em',
                     display: 'block'
                 }
                 return (
@@ -75,11 +81,7 @@
             }
         }
 
-        function renderApp() {
-            ReactDOM.render(<StopWatch/>, root)
-        }
-
-        renderApp()
+        ReactDOM.render(<StopWatch/>, root)
 
     </script>
 

@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Accessing DOM Elements</title>
+</head>
+<body>
+
+    <div id="root"></div>
+
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
+    
+    <script type="text/babel">
+
+        class Node extends React.Component {
+
+            componentDidMount() {
+                console.log(this.node)
+            }
+
+            /*
+                To directly access and manipulate DOM elements,
+                use the 'ref' prop on the element in the render method.
+                You can assign a reference to the actual DOM node,
+                make it a public variable, and manipulate it in your methods.
+            */
+            
+            render() {
+                return (
+                    <div
+                        ref={node => (this.node = node)}
+                        className="tilt-root">
+                        <div className="tilt-child">
+                            <div {...this.props} />
+                        </div>
+                    </div>
+                )
+            }
+
+        }
+
+        const element = (
+            <div>
+                <Node>I am a node</Node>
+            </div>
+        )
+
+        ReactDOM.render(element, root)
+
+    </script>
+
+</body>
+</html>
