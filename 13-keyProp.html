@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Controlling Form Values</title>
+</head>
+<body>
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+
+        /*
+            This example allows us to add and remove items to a class object based on the items available in the class itself.
+
+            The problem is: When rendering an array to the DOM, React needs to know which items are from the old array vs the new array as state changes. To do this, each item needs to have its own 'key' prop, unique to each item.
+
+            In this example, we use the prop key={i.id} for each element in the array. This will allow React to track the state of each item in the array as items are added/removed.
+
+            So make sure that when working with arrays of objects, you use a unique object identifier declared via the key prop.
+
+        */
+        
+        class App extends React.Component {
+
+            allItems = [
+                {id: 'a', value: 'apple'},
+                {id: 'o', value: 'orange'},
+                {id: 'g', value: 'grape'},
+                {id: 'p', value: 'pear'}
+            ]
+
+            state = {items: []}
+
+            addItem = () => {
+                this.setState(({items}) => ({
+                    items: [...items, this.allItems.find(i => !items.includes(i))]
+                }))
+            }
+
+            removeItem = item => {
+                this.setState(({items}) => ({
+                    items: items.filter(i => i !== item)
+                }))
+            }
+
+            render() {
+                const {items} = this.state
+                return (
+                    <div>
+                    <button
+                        disabled={items.length >= this.allItems.length}
+                        onClick={this.addItem}> + </button>
+                    {items.map((i) => (
+                        <div key={i.id}>
+                            <button onClick={() => this.removeItem(i)}> - </button>
+                            {i.value}: <input />
+                        </div>
+                    ))}
+                    </div>
+                )
+            }
+            
+        }
+
+        ReactDOM.render(<App/>, root)
+
+    </script>
+
+<script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+<script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
+</body>
+</html>

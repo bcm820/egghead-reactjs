@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Controlling Form Values</title>
+</head>
+<body>
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+
+        /*
+            To make an asynchronous HTTP request, we use componentDidMount lifecycle hook.
+            The request can be made using Axios, a promise-based HTTP client.
+            In this example, we query Github for a user's info using a GraphQL query.
+            We will request a user's "company", if there is one, or if not, say none.
+        */
+        
+        class UserCompany extends React.Component {
+
+            state = {company: undefined, loaded: false}
+            
+            componentDidMount() {
+                axios({
+                    url: 'https://api.github.com/graphql',
+                    method: 'post',
+                    data: {
+                        query: `{
+                            user(login: "${this.props.username}") {
+                                company
+                            }
+                        }`,
+                    },
+                    headers: {
+                        Authorization: 'bearer 38ef53f8fded550819461e7c447f331d80cb8f06'
+                    },
+                }).then(res => {
+                    this.setState({
+                        loaded: true,
+                        company: res.data.data.user.company
+                    })
+                }).catch(error => {
+                    this.setState({
+                        error,
+                        loaded: true
+                    })
+                })
+            }
+            
+            render() {
+                if(this.state.loaded) {
+                    if(this.state.error) return this.state.error
+                    else return this.state.company || 'No company!'
+                } else return '...'
+            }
+            
+        }
+
+        const username = 'bcmendoza'
+        
+        const element = (
+            <div>
+                <div>
+                    {`@${username}`}'s company:<br/>
+                    <UserCompany username={username}/>
+                </div>
+            </div>
+        )
+
+        ReactDOM.render(element, root)
+
+    </script>
+
+<script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+<script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</body>
+</html>

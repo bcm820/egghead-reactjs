@@ -15,7 +15,7 @@
 
         class FancyForm extends React.Component {
 
-            state = {lines: '', commas: '', selects:[]}
+            state = {lines: '', commas: '', selects: []}
 
             options = [
                 'apple',
@@ -42,12 +42,12 @@
             changeLines = event => {
                 const {value} = event.target
                 const list = value
-                    .split(',')
+                    .split('\n')
                     .map(v => v.trim())
                     .filter(Boolean)
                 this.setState({
                     lines: value,
-                    commas: list.join(', '),
+                    commas: list.join(','),
                     selects: list.filter(v => this.options.includes(v))
                 })
             }
@@ -58,7 +58,7 @@
                 this.setState({
                     selects: list,
                     lines: list.join('\n'),
-                    commas: list.join(', ')
+                    commas: list.join(',')
                 })
             }
 
